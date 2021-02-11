@@ -16,6 +16,8 @@ public class LectorXML {
 		LectorXML lector = new LectorXML();
 		lector.revisaArchivo();
 	}
+	
+	
 
 	private void revisaArchivo() {
 
@@ -30,10 +32,12 @@ public class LectorXML {
 
 		try {
 
-			fichero = new FileWriter("insert.txt");
-			pw = new PrintWriter(fichero);
 
 			File xmlFile = new File(rutaArchivo);
+			
+			fichero = new FileWriter( xmlFile.getName() + "insert.sql" );
+			pw = new PrintWriter(fichero);
+			
 			DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
 			Document doc = dBuilder.parse(xmlFile);
@@ -52,8 +56,10 @@ public class LectorXML {
 				int posIni = 0;
 				
 				for (int i = 0; i < cantOrdenes; i++) {
+//					StringBuilder sbInsert = new StringBuilder(
+//							"insert into INCOMING (FOLIO,NOMBRE_ORDENANTE,ID_TIPO_CUENTA_ORDENANTE,CUENTA_ORDENANTE,RFC_ORDENANTE,NOMBRE_BENEFICIARIO,ID_TIPO_CUENTA_BENEFICIARIO,CUENTA_BENEFICIARIO,RFC_BENEFICIARIO,ID_AREA_EMITE,CONCEPTO_PAGO,MONTO,IVA,REFERENCIA_NUMERICA,REFERENCIA_COBRANZA1,ID_TIPO_PAGO,TOPOLOGIA,PRIORIDAD,RESP_RECEPCION,RESP_BANXICO,ID_TIPO_OPERACION,FECHA_CAPTURA,ID_TIPO_CUENTA_BENEFICIARIO_2,CVE_RASTREO,ID_DEVOLUCION,ID_INSTITUCION_ORD,ID_INSTITUCION_BEN,ID_TIPO_SIAC,FOLIO_PAQUETE,FIRMA,REPARAR,EXPORTAR,STATUS,FOLIO_SERVIDOR,TIPOTRANSFER,ORIGEN,RESPUESTA,FOLIO_ORIGINAL,MONTO_ORIGINAL,INTERESES,FECHA_TRANSFERENCIA_ORIGINAL,FOLIO_PAQUETE_ORIGINAL,FH_OPERACION,MOVIL_ORDENANTE,DV_MOVIL_ORDENANTE,MOVIL_BENEFICIARIO,DV_MOVIL_BENEFICIARIO,FOLIO_ESQ_CODI,COMISION_TRANSFERENCIA_PAGO,COMISION_TRANSFERENCIA_MONTO,NUM_SERIE_COMERCIO,FH_LIMITE_PAGO,CAUSA_CANCELACION,ID_INSTANCIA,FH_CANCELACION)values(");
 					StringBuilder sbInsert = new StringBuilder(
-							"insert into INCOMING (FOLIO,NOMBRE_ORDENANTE,ID_TIPO_CUENTA_ORDENANTE,CUENTA_ORDENANTE,RFC_ORDENANTE,NOMBRE_BENEFICIARIO,ID_TIPO_CUENTA_BENEFICIARIO,CUENTA_BENEFICIARIO,RFC_BENEFICIARIO,ID_AREA_EMITE,CONCEPTO_PAGO,MONTO,IVA,REFERENCIA_NUMERICA,REFERENCIA_COBRANZA1,ID_TIPO_PAGO,TOPOLOGIA,PRIORIDAD,RESP_RECEPCION,RESP_BANXICO,ID_TIPO_OPERACION,FECHA_CAPTURA,ID_TIPO_CUENTA_BENEFICIARIO_2,CVE_RASTREO,ID_DEVOLUCION,ID_INSTITUCION_ORD,ID_INSTITUCION_BEN,ID_TIPO_SIAC,FOLIO_PAQUETE,FIRMA,REPARAR,EXPORTAR,STATUS,FOLIO_SERVIDOR,TIPOTRANSFER,ORIGEN,RESPUESTA,FOLIO_ORIGINAL,MONTO_ORIGINAL,INTERESES,FECHA_TRANSFERENCIA_ORIGINAL,FOLIO_PAQUETE_ORIGINAL,FH_OPERACION,MOVIL_ORDENANTE,DV_MOVIL_ORDENANTE,MOVIL_BENEFICIARIO,DV_MOVIL_BENEFICIARIO,FOLIO_ESQ_CODI,COMISION_TRANSFERENCIA_PAGO,COMISION_TRANSFERENCIA_MONTO,NUM_SERIE_COMERCIO,FH_LIMITE_PAGO,CAUSA_CANCELACION,ID_INSTANCIA,FH_CANCELACION)values(");
+							"insert into CRUCE_TMP (CVE_RASTREO_TMP, MONTO)values(");
 
 					RecepcionInsert r = new RecepcionInsert();
 					r.setClavePago("");
@@ -119,74 +125,80 @@ public class LectorXML {
 //					if (node.getNodeValue().equals("BUFFER_DETALLES")) {
 //						buffer = tempNode.getTextContent();
 //					}
-					int tam = Integer.parseInt( list.get(17).getListValor()[i].trim() ) - 1;
-					System.out.println("posIni " + posIni);
-					System.out.println("tamano " + tam);
-					String bufferTmp = list.get(21).getValor().substring(posIni, posIni + tam );
-					System.out.println("bufferTmp " + bufferTmp);
-					bufferDetalles.llenarCampos(bufferTmp, r);
-					posIni = posIni + Integer.parseInt( list.get(17).getListValor()[i].trim() ) - 1;
-					System.out.println("posIni next" + posIni);
+//					int tam = Integer.parseInt( list.get(17).getListValor()[i].trim() ) - 1;
+//					System.out.println("posIni " + posIni);
+//					System.out.println("tamano " + tam);
+//					String bufferTmp = list.get(21).getValor().substring(posIni, posIni + tam );
+//					System.out.println("bufferTmp " + bufferTmp);
+//					bufferDetalles.llenarCampos(bufferTmp, r);
+//					posIni = posIni + Integer.parseInt( list.get(17).getListValor()[i].trim() ) - 1;
+//					System.out.println("posIni next" + posIni);
+					/**
+					 * 
+					 */
+					sbInsert.append( list.get(18).getListValor()[i] + "'," );
+					sbInsert.append( list.get(15).getListValor()[i] + "," );
+					sbInsert.append(");");
 					/**
 					 * 
 					 */
 
-					sbInsert.append(r.getFolio() + ",");
-					sbInsert.append("'" + r.getNombreOrdenante() + "',");
-					sbInsert.append(r.getIdTipoCuentaOrdenante() + ",");
-					sbInsert.append("'" + r.getCuentaOrdenante() + "',");
-					sbInsert.append("'" + r.getRfcOrdenante() + "',");
-					sbInsert.append("'" + r.getNombreBeneficiario() + "',");
-					sbInsert.append(r.getIdTipoCuentaBeneficiario() + ",");
-					sbInsert.append("'" + r.getCuentaBeneficiario() + "',");
-					sbInsert.append("'" + r.getRfcBeneficiario() + "',");
-					sbInsert.append(r.getIdAreaEmite() + ",");
-					sbInsert.append("'" + r.getConceptoPago() + "',");
-					sbInsert.append(list.get(15).getListValor()[i] + ",");
-					sbInsert.append( "0,");
-					sbInsert.append(" " + r.getReferenciaNumerica() + ",");
-					sbInsert.append("'" + r.getReferenciaCobranza1() + "',");
-					sbInsert.append(r.getIdTipoPago() + ",");
-					sbInsert.append("'" + r.getTopologia() + "',");
-					sbInsert.append(r.getPrioridad() + ",");
-					sbInsert.append("1,");
-					sbInsert.append("1,");
-					sbInsert.append("'',");
-					sbInsert.append("'" + r.getFechaCaptura() + "',");
-					sbInsert.append("''" + ",");
-					sbInsert.append("'" + list.get(18).getListValor()[i] + "',");
-					sbInsert.append(r.getIdDevolucion() + ",");
-					sbInsert.append(r.getIdInstitucionOrd() + ",");
-					sbInsert.append(r.getIdInstitucionBen() + ",");
-					sbInsert.append("0,");
-					sbInsert.append(list.get(9).getListValor()[0] + ",");
-					sbInsert.append("'" + list.get(23).getValor().substring(0, 48) + "',");
-					sbInsert.append("0,");
-					sbInsert.append(r.getExportar() + ",");
-					sbInsert.append("-3,");
-					sbInsert.append("1791161,");
-					sbInsert.append("NULL" + ",");
-					sbInsert.append("NULL" + ",");
-					sbInsert.append("NULL" + ",");
-					sbInsert.append("0,");
-					sbInsert.append("NULL" + ",");
-					sbInsert.append("0,");
-					sbInsert.append("NULL" + ",");
-					sbInsert.append("0,");
-					sbInsert.append("'" + r.getFechaOperacion() + "',");
-					sbInsert.append("0,");
-					sbInsert.append("2,");
-					sbInsert.append("0,");
-					sbInsert.append("2,");
-					sbInsert.append("'0',");
-					sbInsert.append("1,");
-					sbInsert.append("0,");
-					sbInsert.append("NULL,");
-					sbInsert.append("NULL" + ",");
-					sbInsert.append("NULL" + ",");
-					sbInsert.append("NULL,");
-					sbInsert.append("NULL");
-					sbInsert.append(");");
+//					sbInsert.append(r.getFolio() + ",");
+//					sbInsert.append("'" + r.getNombreOrdenante() + "',");
+//					sbInsert.append(r.getIdTipoCuentaOrdenante() + ",");
+//					sbInsert.append("'" + r.getCuentaOrdenante() + "',");
+//					sbInsert.append("'" + r.getRfcOrdenante() + "',");
+//					sbInsert.append("'" + r.getNombreBeneficiario() + "',");
+//					sbInsert.append(r.getIdTipoCuentaBeneficiario() + ",");
+//					sbInsert.append("'" + r.getCuentaBeneficiario() + "',");
+//					sbInsert.append("'" + r.getRfcBeneficiario() + "',");
+//					sbInsert.append(r.getIdAreaEmite() + ",");
+//					sbInsert.append("'" + r.getConceptoPago() + "',");
+//					sbInsert.append(list.get(15).getListValor()[i] + ",");
+//					sbInsert.append( "0,");
+//					sbInsert.append(" " + r.getReferenciaNumerica() + ",");
+//					sbInsert.append("'" + r.getReferenciaCobranza1() + "',");
+//					sbInsert.append(r.getIdTipoPago() + ",");
+//					sbInsert.append("'" + r.getTopologia() + "',");
+//					sbInsert.append(r.getPrioridad() + ",");
+//					sbInsert.append("1,");
+//					sbInsert.append("1,");
+//					sbInsert.append("'',");
+//					sbInsert.append("'" + r.getFechaCaptura() + "',");
+//					sbInsert.append("''" + ",");
+//					sbInsert.append("'" + list.get(18).getListValor()[i] + "',");
+//					sbInsert.append(r.getIdDevolucion() + ",");
+//					sbInsert.append(r.getIdInstitucionOrd() + ",");
+//					sbInsert.append(r.getIdInstitucionBen() + ",");
+//					sbInsert.append("0,");
+//					sbInsert.append(list.get(9).getListValor()[0] + ",");
+//					sbInsert.append("'" + list.get(23).getValor().substring(0, 48) + "',");
+//					sbInsert.append("0,");
+//					sbInsert.append(r.getExportar() + ",");
+//					sbInsert.append("-3,");
+//					sbInsert.append("1791161,");
+//					sbInsert.append("NULL" + ",");
+//					sbInsert.append("NULL" + ",");
+//					sbInsert.append("NULL" + ",");
+//					sbInsert.append("0,");
+//					sbInsert.append("NULL" + ",");
+//					sbInsert.append("0,");
+//					sbInsert.append("NULL" + ",");
+//					sbInsert.append("0,");
+//					sbInsert.append("'" + r.getFechaOperacion() + "',");
+//					sbInsert.append("0,");
+//					sbInsert.append("2,");
+//					sbInsert.append("0,");
+//					sbInsert.append("2,");
+//					sbInsert.append("'0',");
+//					sbInsert.append("1,");
+//					sbInsert.append("0,");
+//					sbInsert.append("NULL,");
+//					sbInsert.append("NULL" + ",");
+//					sbInsert.append("NULL" + ",");
+//					sbInsert.append("NULL,");
+//					sbInsert.append("NULL");
+//					sbInsert.append(");");
 
 					System.out.println(sbInsert);
 					pw.println(sbInsert);
