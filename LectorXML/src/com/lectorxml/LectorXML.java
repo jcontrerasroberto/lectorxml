@@ -209,7 +209,7 @@ public class LectorXML {
 					/**
 					 * 
 					 */
-					sbInsert.append( "'" + list.get(18).getListValor()[i] + "'," );
+					sbInsert.append( "'" + list.get(18).getListValor()[i].trim() + "'," );
 					sbInsert.append( "'" + r.getFechaCaptura() + "'," );
 					sbInsert.append( list.get(15).getListValor()[i] + "" );
 					sbInsert.append(");");
@@ -283,7 +283,7 @@ public class LectorXML {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			
+			System.out.println("Terminado...");
 		}
 	}
 
