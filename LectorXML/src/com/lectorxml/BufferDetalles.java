@@ -2,8 +2,12 @@ package com.lectorxml;
 
 public class BufferDetalles {
 
+	private static String buffer;
+	private static String nombre_1 = "", tipo_cta_1 = "", cuenta_1 = "", rfc_1 = "";
+	private static String nombre_2 = "", tipo_cta_2 = "", cuenta_2 = "", rfc_2 = "";
+	private static String concepto = "", iva = "", monto = "";
 	
-	private static void llenarCampos(String buffer) {
+	private RecepcionInsert llenarCampos(String buffer, RecepcionInsert r) {
 		System.out.println("\n\nLlenando los campos");
 		// Eliminamos los [ ]
 		buffer = buffer.substring(1);
@@ -71,17 +75,29 @@ public class BufferDetalles {
 		concepto.substring(0, concepto.length()-1);
 
 		System.out.println("Nombre 1: " + nombre_1);
+		r.setNombreOrdenante( nombre_1 );
 		System.out.println("Tipo de cuenta 1: " + tipo_cta_1);
+		r.setIdTipoCuentaOrdenante( Integer.parseInt( tipo_cta_1 ) );
 		System.out.println("Cuenta 1: " + cuenta_1);
+		r.setCuentaOrdenante( cuenta_1 );
 		System.out.println("RFC 1: " + rfc_1);
+		r.setRfcOrdenante( rfc_1 );
 		System.out.println("Nombre 2: " + nombre_2);
+		r.setNombreBeneficiario( nombre_2 );
 		System.out.println("Tipo de cuenta 2: " + tipo_cta_2);
+		r.setIdTipoCuentaBeneficiario( Integer.parseInt( tipo_cta_2 ) );
 		System.out.println("Cuenta 2: " + cuenta_2);
+		r.setCuentaBeneficiario( cuenta_2 );
 		System.out.println("RFC 2: " + rfc_2);
+		r.setRfcBeneficiario( rfc_2 );
 		System.out.println("Concepto: " + concepto);
+		r.setConceptoPago( concepto );
 		System.out.println("IVA: " + iva);
+		r.setIva( iva );
 		System.out.println("Monto: " + monto);
+		r.setMonto( monto );
 
+		return r;
 	}
 	
 }
