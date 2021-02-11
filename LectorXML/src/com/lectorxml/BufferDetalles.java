@@ -2,15 +2,16 @@ package com.lectorxml;
 
 public class BufferDetalles {
 
-	private static String nombre_1 = "", tipo_cta_1 = "", cuenta_1 = "", rfc_1 = "";
-	private static String nombre_2 = "", tipo_cta_2 = "", cuenta_2 = "", rfc_2 = "";
-	private static String concepto = "", iva = "", monto = "";
 	
 	public RecepcionInsert llenarCampos(String buffer, RecepcionInsert r) {
+		String nombre_1 = "", tipo_cta_1 = "", cuenta_1 = "", rfc_1 = "";
+		String nombre_2 = "", tipo_cta_2 = "", cuenta_2 = "", rfc_2 = "";
+		String concepto = "", iva = "", monto = "";
 		System.out.println("\n\nLlenando los campos");
+		System.out.println( "buffer" + buffer );
 		// Eliminamos los [ ]
-		buffer = buffer.substring(1);
-		buffer = buffer.substring(0, buffer.length() - 1);
+//		buffer = buffer.substring(1);
+//		buffer = buffer.substring(0, buffer.length() - 1);
 		String separados[] = buffer.split(" ");
 		int sizearray = separados.length;
 		int flag = 0;

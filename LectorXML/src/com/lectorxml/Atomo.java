@@ -1,11 +1,15 @@
 package com.lectorxml;
 
+import java.util.List;
+
 public class Atomo {
 
 	private String desc;
 	private int num;
 	private String tipo;
 	private String valor;
+	private String[] listValor;
+	
 	public String getDesc() {
 		return desc;
 	}
@@ -29,6 +33,12 @@ public class Atomo {
 	}
 	public void setValor(String valor) {
 		this.valor = valor;
+	}
+	public String[] getListValor() {
+		return listValor;
+	}
+	public void setListValor(String[] listValor) {
+		this.listValor = listValor;
 	}
 	
 	

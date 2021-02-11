@@ -1,7 +1,14 @@
 package com.lectorxml;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class RecepcionInsert {
 
+	private DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+	private DateFormat df2 = new SimpleDateFormat("yyyyMMdd");
 	
 	private int folio;
     private int idInstitucionOrd;
@@ -207,8 +214,9 @@ public class RecepcionInsert {
 	public String getFechaCaptura() {
 		return fechaCaptura;
 	}
-	public void setFechaCaptura(String fechaCaptura) {
-		this.fechaCaptura = fechaCaptura;
+	public void setFechaCaptura(String fechaCaptura) throws ParseException {
+		Date d = df.parse(fechaCaptura);
+		this.fechaCaptura = df2.format(d);
 	}
 	public String getNombreBeneficiario2() {
 		return nombreBeneficiario2;
@@ -309,8 +317,9 @@ public class RecepcionInsert {
 	public String getFechaOperacion() {
 		return fechaOperacion;
 	}
-	public void setFechaOperacion(String fechaOperacion) {
-		this.fechaOperacion = fechaOperacion;
+	public void setFechaOperacion(String fechaOperacion) throws ParseException {
+		Date d = df.parse(fechaOperacion);
+		this.fechaOperacion = df2.format(d);
 	}
 	public int getFolioOriginal() {
 		return folioOriginal;
