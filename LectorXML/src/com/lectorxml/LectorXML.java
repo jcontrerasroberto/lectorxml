@@ -114,7 +114,7 @@ public class LectorXML {
 			DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
 			Document doc = dBuilder.parse(xmlFile);
-			System.out.println("Root element :" + doc.getDocumentElement().getNodeName());
+//			System.out.println("Root element :" + doc.getDocumentElement().getNodeName());
 			if (doc.hasChildNodes()) {
 
 				Node tempNode = doc.getChildNodes().item(0);
@@ -123,7 +123,7 @@ public class LectorXML {
 				List<String> bufferList = new ArrayList<String>();
 
 				int cantOrdenes = Integer.parseInt(list.get(12).getValor());
-				System.out.println("cantidad: " + cantOrdenes);
+//				System.out.println("cantidad: " + cantOrdenes);
 
 				List<RecepcionInsert> listInsert = new ArrayList<RecepcionInsert>();
 				int posIni = 0;
@@ -273,7 +273,7 @@ public class LectorXML {
 //					sbInsert.append("NULL");
 //					sbInsert.append(");");
 
-					System.out.println(sbInsert);
+//					System.out.println(sbInsert);
 					pw.println(sbInsert);
 				}
 
@@ -298,8 +298,8 @@ public class LectorXML {
 
 			if (tempNode.getNodeType() == Node.ELEMENT_NODE) {
 
-				System.out.println("\n[INICIO]");
-				System.out.println("Node Name = " + tempNode.getNodeName());
+//				System.out.println("\n[INICIO]");
+//				System.out.println("Node Name = " + tempNode.getNodeName());
 
 				if (tempNode.hasAttributes()) {
 
@@ -323,14 +323,14 @@ public class LectorXML {
 				}
 				a.setValor(tempNode.getTextContent().replace("[", "").replace("]", ""));
 				a.setListValor(a.getValor().split(","));
-				System.out.println("Valor del nodo = " + tempNode.getTextContent());
-				System.out.println("[FIN]");
+//				System.out.println("Valor del nodo = " + tempNode.getTextContent());
+//				System.out.println("[FIN]");
 				atomList.add(a);
 			}
 		}
 
 		for (Atomo a : atomList) {
-			System.out.println("atomo (" + a.getNum() + "): " + a.getDesc() + "  " + a.getValor());
+//			System.out.println("atomo (" + a.getNum() + "): " + a.getDesc() + "  " + a.getValor());
 		}
 
 		return atomList;
