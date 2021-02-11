@@ -11,24 +11,47 @@ import java.io.*;
 public class LectorXML {
 
 	BufferDetalles bufferDetalles = new BufferDetalles();
+	
 
 	public static void main(String[] args) {
+		List<String> archivos = new ArrayList<String>();
 		LectorXML lector = new LectorXML();
-		lector.revisaArchivo();
+		archivos = lector.obtenerArchivos();
+		for(String archivo: archivos) {
+			lector.revisaArchivo(archivo);
+		}
 	}
 	
-	
+	private List<String> obtenerArchivos() {
+		List<String> archivostemp = new ArrayList<String>();
+		Scanner entrada = new Scanner(System.in);
+		String dir = "";
+		System.out.println("Ingresa el nombre del directorio");
+		dir = entrada.nextLine();
+		File carpeta = new File(dir);
+		if(carpeta.isDirectory()) {
+			for(File f: carpeta.listFiles()) {
+				int indexPoint = f.getName().lastIndexOf(".");
+				if (indexPoint != -1) {
+					String ext = f.getName().substring(indexPoint);
+					if(ext.equals(".xml")) archivostemp.add(f.getAbsolutePath());
+			    }
+			}
+		}
+		for(String s : archivostemp) {
+			System.out.println(s);
+		}
+		return archivostemp;
+	}
 
-	private void revisaArchivo() {
+	private void revisaArchivo(String archivo) {
 
 		FileWriter fichero = null;
 		PrintWriter pw = null;
 
 		System.out.println("Lector XML");
-		Scanner entrada = new Scanner(System.in);
 		String rutaArchivo = "";
-		System.out.println("Ingresa el nombre del archivo");
-		rutaArchivo = entrada.nextLine();
+		rutaArchivo = archivo;
 
 		try {
 
