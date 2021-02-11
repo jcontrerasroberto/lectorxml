@@ -16,9 +16,35 @@ public class LectorXML {
 		List<String> archivos = new ArrayList<String>();
 		LectorXML lector = new LectorXML();
 		archivos = lector.obtenerArchivos();
-		for(String archivo: archivos) {
-			lector.cambiarEspeciales(archivo);
-			lector.revisaArchivo(archivo);
+		String salida = lector.nombreSalida();
+		/**
+		 * 
+		 */
+		FileWriter fichero = null;
+		PrintWriter pw = null;
+		
+		try {
+			fichero = new FileWriter( salida + ".sql" );
+			pw = new PrintWriter(fichero);
+			/**
+			 * 
+			 */
+			for(String archivo: archivos) {
+				lector.cambiarEspeciales(archivo);
+				lector.revisaArchivo(archivo, pw);
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			try {
+				// Nuevamente aprovechamos el finally para
+				// asegurarnos que se cierra el fichero.
+				if (null != fichero)
+					fichero.close();
+			} catch (Exception e2) {
+				e2.printStackTrace();
+			}
 		}
 	}
 	
@@ -65,11 +91,16 @@ public class LectorXML {
 		}
 		return archivostemp;
 	}
+	
+	private String nombreSalida() {
+		Scanner entrada = new Scanner(System.in);
+		String salida = "";
+		System.out.println("Ingresa el nombre del insertSql");
+		salida = entrada.nextLine();
+		return salida;
+	}
 
-	private void revisaArchivo(String archivo) {
-
-		FileWriter fichero = null;
-		PrintWriter pw = null;
+	private void revisaArchivo(String archivo, PrintWriter pw) {
 
 		System.out.println("Lector XML");
 		String rutaArchivo = "";
@@ -79,9 +110,6 @@ public class LectorXML {
 
 
 			File xmlFile = new File(rutaArchivo);
-			
-			fichero = new FileWriter( xmlFile.getName() + "insert.sql" );
-			pw = new PrintWriter(fichero);
 			
 			DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
@@ -181,7 +209,7 @@ public class LectorXML {
 					/**
 					 * 
 					 */
-					sbInsert.append( list.get(18).getListValor()[i] + "'," );
+					sbInsert.append( "'" + list.get(18).getListValor()[i] + "'," );
 					sbInsert.append( list.get(15).getListValor()[i] + "," );
 					sbInsert.append(");");
 					/**
@@ -254,14 +282,7 @@ public class LectorXML {
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
-			try {
-				// Nuevamente aprovechamos el finally para
-				// asegurarnos que se cierra el fichero.
-				if (null != fichero)
-					fichero.close();
-			} catch (Exception e2) {
-				e2.printStackTrace();
-			}
+			
 		}
 	}
 
