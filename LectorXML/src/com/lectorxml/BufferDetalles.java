@@ -2,12 +2,11 @@ package com.lectorxml;
 
 public class BufferDetalles {
 
-	private static String buffer;
 	private static String nombre_1 = "", tipo_cta_1 = "", cuenta_1 = "", rfc_1 = "";
 	private static String nombre_2 = "", tipo_cta_2 = "", cuenta_2 = "", rfc_2 = "";
 	private static String concepto = "", iva = "", monto = "";
 	
-	private RecepcionInsert llenarCampos(String buffer, RecepcionInsert r) {
+	public RecepcionInsert llenarCampos(String buffer, RecepcionInsert r) {
 		System.out.println("\n\nLlenando los campos");
 		// Eliminamos los [ ]
 		buffer = buffer.substring(1);

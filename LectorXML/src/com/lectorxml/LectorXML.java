@@ -10,6 +10,8 @@ import java.io.*;
 
 public class LectorXML {
 
+	BufferDetalles bufferDetalles = new BufferDetalles();
+	
 	public static void main(String[] args) {
 		LectorXML lector = new LectorXML();
 		lector.revisaArchivo();
@@ -29,8 +31,11 @@ public class LectorXML {
 			Document doc = dBuilder.parse(xmlFile);
 			System.out.println("Root element :" + doc.getDocumentElement().getNodeName());
 			if (doc.hasChildNodes()) {
+				
 				Node tempNode = doc.getChildNodes().item(0);
+				
 				List<Atomo> list = printNote(tempNode.getChildNodes());
+				List<String> bufferList = new ArrayList<String>();
 				
 				int cantOrdenes = Integer.parseInt( list.get( 12 ).getValor() );
 				System.out.println( "cantidad: " + cantOrdenes );
@@ -97,6 +102,19 @@ public class LectorXML {
 					r.setRfcOrdenante( "hard" );
 					r.setStatus( 0 );
 					r.setTopologia( 'V' );
+					
+					/**
+					 * 
+					 */
+//					if (node.getNodeValue().equals("BUFFER_DETALLES")) {
+//						buffer = tempNode.getTextContent();
+//					}
+					String bufferTmp = list.get( 21 ).getValor();
+					System.out.println( "bufferTmp " + bufferTmp );
+					bufferDetalles.llenarCampos(rutaArchivo, r);
+					/**
+					 * 
+					 */
 					
 					sbInsert.append( r.getFolio() );
 					sbInsert.append( r.getNombreOrdenante() );
@@ -194,6 +212,8 @@ public class LectorXML {
 						} else if ( node.getNodeName().equals( "tipo" ) ) {
 							a.setTipo( node.getNodeValue() );							
 						}
+						
+						
 						System.out.print( node.getNodeName() );
 						System.out.print(" = ");
 						System.out.println(node.getNodeValue());
