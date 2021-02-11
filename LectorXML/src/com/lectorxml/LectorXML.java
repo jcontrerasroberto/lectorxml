@@ -143,7 +143,7 @@ public class LectorXML {
 					sbInsert.append(r.getIdAreaEmite() + ",");
 					sbInsert.append("'" + r.getConceptoPago() + "',");
 					sbInsert.append(list.get(15).getListValor()[i] + ",");
-					sbInsert.append(r.getIva() + ",");
+					sbInsert.append( "0,");
 					sbInsert.append(" " + r.getReferenciaNumerica() + ",");
 					sbInsert.append("'" + r.getReferenciaCobranza1() + "',");
 					sbInsert.append(r.getIdTipoPago() + ",");
@@ -160,7 +160,7 @@ public class LectorXML {
 					sbInsert.append(r.getIdInstitucionBen() + ",");
 					sbInsert.append("0,");
 					sbInsert.append(list.get(9).getListValor()[0] + ",");
-					sbInsert.append("'" + list.get(23).getValor().substring(i, ((i + 1) * 48)) + "',");
+					sbInsert.append("'" + list.get(23).getValor().substring(0, 48) + "',");
 					sbInsert.append("0,");
 					sbInsert.append(r.getExportar() + ",");
 					sbInsert.append("-3,");
