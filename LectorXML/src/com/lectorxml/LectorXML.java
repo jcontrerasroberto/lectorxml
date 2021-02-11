@@ -1,6 +1,5 @@
 package com.lectorxml;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -18,7 +17,30 @@ public class LectorXML {
 		LectorXML lector = new LectorXML();
 		archivos = lector.obtenerArchivos();
 		for(String archivo: archivos) {
+			lector.cambiarEspeciales(archivo);
 			lector.revisaArchivo(archivo);
+		}
+	}
+	
+	private void cambiarEspeciales(String archivo) {
+		File temp = new File(archivo);
+		String especiales = "·ÈÌÛ˙¡…Õ”⁄¸‹Ò—‰ÎÔˆ¸";
+		String old = "";
+		try {
+			BufferedReader reader = new BufferedReader(new FileReader(temp));
+			String line = reader.readLine();
+			while(line != null) {
+				old = old + line + System.lineSeparator();
+				line = reader.readLine();
+			}
+			String newContent = old.replaceAll("["+especiales+"]", " ");
+			FileWriter writer = new FileWriter(temp);
+			writer.write(newContent);
+			reader.close();
+			writer.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 	
