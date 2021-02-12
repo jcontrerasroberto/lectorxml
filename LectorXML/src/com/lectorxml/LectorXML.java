@@ -50,7 +50,7 @@ public class LectorXML {
 	
 	private void cambiarEspeciales(String archivo) {
 		File temp = new File(archivo);
-		String especiales = "áéíóúÁÉÍÓÚüÜñÑäëïöü";
+		String especiales = "áéíóúÁÉÍÓÚüÜñÑäëïöü¬";
 		String old = "";
 		try {
 			BufferedReader reader = new BufferedReader(new FileReader(temp));
@@ -316,9 +316,9 @@ public class LectorXML {
 							a.setTipo(node.getNodeValue());
 						}
 
-						System.out.print(node.getNodeName());
-						System.out.print(" = ");
-						System.out.println(node.getNodeValue());
+//						System.out.print(node.getNodeName());
+//						System.out.print(" = ");
+//						System.out.println(node.getNodeValue());
 					}
 
 				}
