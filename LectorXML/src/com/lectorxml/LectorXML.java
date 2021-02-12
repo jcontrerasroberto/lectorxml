@@ -30,8 +30,14 @@ public class LectorXML {
 			 * 
 			 */
 			for(String archivo: archivos) {
-				lector.cambiarEspeciales(archivo);
-				lector.revisaArchivo(archivo, pw);
+				Scanner entrada = new Scanner(System.in);
+				String resp = "";
+				System.out.print("¿Quieres procesar el archivo "+archivo +"? [Y/N]: ");
+				resp  = entrada.nextLine();
+				if(resp.equals("Y") || resp.equals("y")) {
+					lector.cambiarEspeciales(archivo);
+					lector.revisaArchivo(archivo, pw);
+				}
 			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
